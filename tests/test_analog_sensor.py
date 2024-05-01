@@ -1,19 +1,5 @@
-from src.communication import CommsProtocol
+from tests.mock_comms_stub import CommsStub
 from src.sensors import AnalogueSensor
-
-class CommsStub(CommsProtocol):
-    def __init__(self, expected_code, expected_time, expected_value) -> None:
-        self.command_sent = None
-        self.code = expected_code
-        self.time = expected_time
-        self.value = expected_value
-
-    def send_command(self, command: str) -> None:
-        self.command_sent = command
-
-    def read_connection(self) -> str:
-        return f"{self.code}: {self.time}, {self.value}"
-
 
 def test_get_sensor_value_sends_correct_command():
     expected_command = 'A'

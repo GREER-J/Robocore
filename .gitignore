@@ -1,6 +1,7 @@
 # Ignore IDE specific
 .vscode/
 __pycache__/
+.pytest_cache/
 
 # Ignore cache files
 tests/__pycache__/

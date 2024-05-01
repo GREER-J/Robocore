@@ -77,3 +77,7 @@ Updates guidance trajectory to deliver setpoints for controller.
 
 ### State logging update
 Logs current state at known frequency
+
+## Config files
+The micro controller and python program talk to each other with commands. If we specify available commands or sensors that can be standardised.
+
