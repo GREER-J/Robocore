@@ -29,5 +29,5 @@ class SetpointActuatorEvent(EventProtocol):
         """
         Process the setpoint actuator event by setting the actuator to the specified setpoint.
         """
-        self._actuator.set_actuator_command(self.setpoint)
+        self._actuator.set_actuator(self.setpoint)
 

@@ -2,7 +2,7 @@ from typing import Protocol
 from src.communication import CommsProtocol
 
 class ActuatorProtocol(Protocol):
-    def set_actuator_command(self, command:float) -> None:
+    def set_actuator(self, command:float) -> None:
         """
         Set the current level for an actuator.
 
@@ -28,17 +28,17 @@ class PwmOutput(ActuatorProtocol):
     
     @property
     def actuator_command(self) -> str:
-        return f"{self.set_actuator_command}, {self._current_val}"
+        return f"{self._set_actuator_command}, {self._current_val}"
 
-    def set_actuator_command(self, command: float) -> None:
-        if self.is_legal_command(command):
-            self._current_val = command
+    def set_actuator(self, setpoint_val: float) -> None:
+        if self.is_legal_command(setpoint_val):
+            self._current_val = setpoint_val
             self._connection.send_command(self.actuator_command)
         else:
-            if command < self._min:
-                raise ValueError(f"Command value {command} is below the minimum limit of {self._min}.")
+            if setpoint_val < self._min:
+                raise ValueError(f"Command value {setpoint_val} is below the minimum limit of {self._min}.")
             else:
-                raise ValueError(f"Command value {command} is below the maximum limit of {self._max}.")
+                raise ValueError(f"Command value {setpoint_val} is below the maximum limit of {self._max}.")
 
     @property
     def current_val(self) -> float:
