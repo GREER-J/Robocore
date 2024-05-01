@@ -4,10 +4,9 @@ from src.timekeeper import TimeKeeper
 from src.sensors import AnalogueSensor
 from src.plant import build_plant
 from src.state import State
+
 import numpy as np
 import os
-
-from matplotlib import pyplot as plt
 
 dt = 0.2 # [s]
 T0 = 18 # [deg c]
