@@ -1,5 +1,5 @@
 from src.communication import CommsProtocol
-from src.sensors import AnalogueSensor, SensorProtocol
+from src.sensors import SensorProtocol
 
 class SensorFactory:
     def __init__(self, connection: CommsProtocol, sensor_dict: dict[str:SensorProtocol]) -> SensorProtocol:
