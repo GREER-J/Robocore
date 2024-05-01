@@ -11,9 +11,19 @@ class TemperatureSimulation(SimProtocol):
         self.time_keeper = time_keeper
         self._time = time_keeper.time
         self.y = None
+        self._available_commands = {}
 
     def update_measurements(self) -> None:
         pass
+
+    def pass_command_to_sim(self, command: str) -> str:
+        # Receive command
+        cmd = self._available_commands[command]
+        # Call appropriate function
+        rv = cmd()
+        # Return result
+        rv = ""
+        return rv
 
     def set_Q1(self) -> None:
         self.state._u

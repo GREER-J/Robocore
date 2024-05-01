@@ -4,16 +4,15 @@ class SimStub:
     def __init__(self) -> None:
         self.sensor_fun_called = False
 
-    def sensor_fun(self) -> str:
-        self.sensor_fun_called = True
-        return 0, 20.3
+    def send_command(self, command:str) -> str:
+        self.command_sent = command
+        return ""
 
 def test_sim_connection_calls_correct_sim_function():
     """Sim connection object should call the correct function in sim"""
     expected_command = 'A'
     dummy_sim = SimStub()
-    commands = {expected_command: (1, dummy_sim.sensor_fun)}
-    sim_connection = SimConnection(commands)
+    sim_connection = SimConnection(dummy_sim.send_command)
     sim_connection.send_command(expected_command)
 
-    assert dummy_sim.sensor_fun_called == True, "The correct function wasn't called"
+    assert dummy_sim.command_sent == expected_command, "The correct command wasn't sent"
