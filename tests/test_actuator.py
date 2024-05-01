@@ -23,17 +23,20 @@ def test_can_set_current_val():
     assert actuator.current_val == volts, "Actuator should store the command voltage accurately"
 
 def test_when_voltage_over_max_raises_error():
-    actuator = PwmOutput(0, 6)
+    dummy_comms = CommsStub('a', 2, 4)
+    actuator = PwmOutput(0, 6, 'a', dummy_comms)
     with pytest.raises(ValueError):
         actuator.set_actuator_command(7)
 
 def test_when_voltage_over_min_raises_error():
-    actuator = PwmOutput(2, 6)
+    dummy_comms = CommsStub('a', 2, 4)
+    actuator = PwmOutput(0, 6, 'a', dummy_comms)
     with pytest.raises(ValueError):
-        actuator.set_actuator_command(1)
+        actuator.set_actuator_command(-1)
 
 def test_voltage_type():
-    actuator = PwmOutput(0, 6)
+    dummy_comms = CommsStub('a', 2, 4)
+    actuator = PwmOutput(0, 6, 'a', dummy_comms)
     with pytest.raises(TypeError):
         actuator.set_actuator_command("High")  # Non-numeric input should raise an error
 
