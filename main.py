@@ -5,6 +5,7 @@ from src.sensors import AnalogueSensor
 from src.plant import build_plant
 from src.state import State
 import numpy as np
+import os
 
 from matplotlib import pyplot as plt
 
@@ -27,11 +28,17 @@ sim_data = [time_keeper, conn_type, sim_interactions]
 
 tclab = build_plant(sim_data)
 
-time, data = tclab.poll_sensors("T1", 100, 0.1)
+time, data = tclab.poll_sensors("T1", 10, 1)
 
-plt.plot(time, data)
-plt.title("Sensor Data Over Time")
-plt.xlabel("Time (s)")
-plt.ylabel("Sensor Value")
-plt.grid(True)
-plt.show()
+# Create the 'out' directory if it doesn't exist
+output_directory = "out"
+os.makedirs(output_directory, exist_ok=True)
+
+# Save sensor data to a text file in the 'out' directory
+output_file = os.path.join(output_directory, "sensor_data.txt")
+with open(output_file, "w") as file:
+    file.write("Time (s)\tSensor Value\n")
+    for t, d in zip(time, data):
+        file.write(f"{t:.2f}\t{d:.2f}\n")
+
+print(f"Sensor data saved to {output_file}")
