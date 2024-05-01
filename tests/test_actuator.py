@@ -1,8 +1,23 @@
 from src.actuators import PwmOutput
+from src.communication import CommsProtocol
 import pytest
 
+class CommsStub(CommsProtocol):
+    def __init__(self, expected_code, expected_time, expected_value) -> None:
+        self.command_sent = None
+        self.code = expected_code
+        self.time = expected_time
+        self.value = expected_value
+
+    def send_command(self, command: str) -> None:
+        self.command_sent = command
+
+    def read_connection(self) -> str:
+        return f"{self.code}: {self.time}, {self.value}"
+
 def test_can_set_current_val():
-    actuator = PwmOutput(0, 6)  # Assuming 0 is the channel and 6 is the maximum voltage
+    dummy_comms = CommsStub('a', 2, 4)
+    actuator = PwmOutput(0, 6, 'a', dummy_comms)
     volts = 2
     actuator.set_actuator_command(volts)
     assert actuator.current_val == volts, "Actuator should store the command voltage accurately"
