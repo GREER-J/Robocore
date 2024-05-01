@@ -1,5 +1,5 @@
 # Robocore
-A standard framework to make common robotics task easier.
+A standard framework to make common robotics tasks easier.
 
 ## Use cases:
 ### Initial design with Robocore
