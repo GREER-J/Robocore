@@ -1,27 +1,20 @@
 from src.plant import Plant
-from src.sensors import SensorProtocol
 from src.timekeeper import TimeKeeper
 from src.events import EventManager
 
+from tests.mock_sensor_stub import SensorStub
+from tests.mock_comms_stub import CommsStub
+
 import pytest
 
-class SensorStub(SensorProtocol):
-    def __init__(self, interval) -> None:
-        self.n_called = 0
-        self.interval = interval
-        self.time = 0
 
-    def get_sensor_command(self):
-        self.n_called += 1
-        self.time += self.interval
-        return self.time, 20.0
 
 @pytest.mark.skip(reason="Skipping test until issue is resolved")
 def test_vehicle_calls_sensor_n_number_times():
     n_samples = 10
     frequency = 2
 
-    temp_sensor = SensorStub(frequency)
+    temp_sensor = SensorStub('a', CommsStub('a', 1,1))
     sensors = {'temperature': temp_sensor}
     tk = TimeKeeper(300)
     vehicle = Plant(tk, EventManager(3, tk), sensors, actuators=None)

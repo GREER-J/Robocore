@@ -1,6 +1,5 @@
 from src.events import Event, EventManager
 from src.timekeeper import TimeKeeper
-import time
 
 class DummyFun:
     def __init__(self, time_keeper: TimeKeeper) -> None:
