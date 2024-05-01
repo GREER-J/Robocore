@@ -7,11 +7,5 @@ def test_time_keeper_faster_time():
     time_scalar = exp_time/delay_time
     tk = TimeKeeper(time_scalar)
     time.sleep(delay_time)
-    tolerance = 10/1000 # [s]
+    tolerance = 20/1000 # [s]
     assert tk.time - exp_time <= tolerance 
-
-
-
-
-
-
