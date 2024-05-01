@@ -6,16 +6,17 @@ from tests.mock_sensor_stub import SensorStub
 def test_sensor_fac_create_correct_sensor():
     # Sensor configuration for the test
     sensor_config = {
-        "id": "Q1",
-        "type": "pwm",
-        "subtype": "heater",
-        "command": "Q1",
+        "id": "T2",
+        "type": "analog",
+        "subtype": "temperature",
+        "command": "T2",
+        "resolution": 0.01,
         "limits": [0, 100],
-        "units": "percent"
+        "units": "degrees Celsius"
     }
 
     dummy_comms = CommsStub('a', 1,1)
-    sensor_dict = {"pwm": SensorStub}
+    sensor_dict = {"analog": SensorStub}
     fac = SensorFactory(dummy_comms, sensor_dict)
 
     sensor = fac.create_sensor(sensor_config)
@@ -24,16 +25,17 @@ def test_sensor_fac_create_correct_sensor():
 def test_sensor_fac_create_analog_sensor():
     # Sensor configuration for the test
     sensor_config = {
-        "id": "Q1",
-        "type": "pwm",
-        "subtype": "heater",
-        "command": "Q1",
+        "id": "T2",
+        "type": "analog",
+        "subtype": "temperature",
+        "command": "T2",
+        "resolution": 0.01,
         "limits": [0, 100],
-        "units": "percent"
+        "units": "degrees Celsius"
     }
 
     dummy_comms = CommsStub('a', 1,1)
-    sensor_dict = {"pwm": AnalogueSensor}
+    sensor_dict = {"analog": AnalogueSensor}
     fac = SensorFactory(dummy_comms, sensor_dict)
 
     sensor = fac.create_sensor(sensor_config)
