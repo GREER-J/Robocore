@@ -32,32 +32,25 @@ class Plant():
         while len(times) < n_samples:
             self._event_manager.update()
         
-        
         print("Rounds complete")
         return times, values
 
     
-def build_plant(sim_data) -> Plant:
-    time_keeper, conn_type, conn_interactions = sim_data
-    # Bulid comands
-    commands = {}
-    sensor_data = []
-    for cmd, code, name, sensor_type, fun in conn_interactions:
-        commands[cmd] = (code, fun)
-        sensor_data.append((name, sensor_type, cmd))
+def build_plant(sim_config: dict, sim_reference =None) -> Plant:
+    """
+    Get's passed a config and optionally a sim object to create a plant with
+    """    
 
     # Create connection
-    conn = conn_type(commands)
+    
 
     # Create sensors
     sensors = {}
-    for name, sensor_type, cmd in sensor_data:
-        sensors[name] = sensor_type(cmd, conn)
+    
 
     # Create actuators
     actuators = {}
-    for name, sensor_type, cmd in sensor_data:
-        actuators[name] = sensor_type(cmd, conn)
+    
 
     event_manager = EventManager(2, time_keeper)
     

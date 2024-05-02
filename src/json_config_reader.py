@@ -1,0 +1,11 @@
+import json
+
+class JsonConfigReader:
+    def __init__(self) -> None:
+        pass
+
+    def read_config(self, config_path: str) -> dict:
+        # Load the JSON data from a file
+        with open(config_path, 'r') as file:
+            config = json.load(file)
+        return config
