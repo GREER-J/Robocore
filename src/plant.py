@@ -1,6 +1,11 @@
 from src.sensors import SensorProtocol
 from src.timekeeper import TimeKeeper
 from src.events import EventManager, Event
+from src.config_reader import ConfigReaderProtocol
+from src.communications_factory import CommsFactory
+from src.sensor_factory import SensorFactory
+from src.actuator_fac import ActuatorFactory
+from src.simulation import SimProtocol
 
 class Plant():
     def __init__(self, time_keeper: TimeKeeper, event_manager: EventManager, sensors: dict[str, SensorProtocol], actuators) -> None:
@@ -36,24 +41,37 @@ class Plant():
         return times, values
 
     
-def build_plant(sim_config: dict, sim_reference =None) -> Plant:
+def build_plant(config_file_path:str, config_reader:ConfigReaderProtocol, comms_fac: CommsFactory, sensor_fac:SensorFactory, actuator_fac:ActuatorFactory, sim_reference: SimProtocol =None) -> Plant:
     """
     Get's passed a config and optionally a sim object to create a plant with
     """    
+    # Read config
+    config = config_reader.read_config(config_file_path)
+    
+    if config['conn'] == 'simulation':
+        tk = sim_reference.time_keeper
+    else:
+        tk = TimeKeeper(int(config['time_multiplier']))
 
     # Create connection
-    
+    comms_fac.create_comms(config['conn'], command_fun=sim_reference)
+
 
     # Create sensors
     sensors = {}
+    for sensor_config in config['sensors']:
+        sensors[sensor_config['id']] = sensor_fac.create_sensor(sensor_config)
+
     
 
     # Create actuators
     actuators = {}
+    for actuator_config in config['actuators']:
+        actuators[actuator_config['id']] = actuator_fac.create_actuator(actuator_config)
     
 
-    event_manager = EventManager(2, time_keeper)
+    event_manager = EventManager(2, tk)
     
     # Create plant
-    plant = Plant(time_keeper, event_manager, sensors, None)
+    plant = Plant(tk, event_manager, sensors, None)
     return plant
