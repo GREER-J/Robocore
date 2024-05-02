@@ -1,11 +1,12 @@
 from src.simulation import SimProtocol
 
+
 class SimStub(SimProtocol):
     def __init__(self, return_value: str) -> None:
         self.sensor_fun_called = False
         self._return_val = return_value
 
-    def pass_command_to_sim(self, command:str) -> str:
+    def pass_command_to_sim(self, command: str) -> str:
         self.command_sent = command
         return self._return_val
 

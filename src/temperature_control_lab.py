@@ -2,8 +2,9 @@ from src.state import StateProtocol
 from src.simulation import SimProtocol
 from src.timekeeper import TimeKeeper
 
+
 class TemperatureSimulation(SimProtocol):
-    def __init__(self, state: StateProtocol, state_dynamics: callable, measurement_function: callable, time_keeper: TimeKeeper, x0 = None):
+    def __init__(self, state: StateProtocol, state_dynamics: callable, measurement_function: callable, time_keeper: TimeKeeper, x0=None):
         self.state = state
         self.state.mu = x0
         self.state_dynamics = state_dynamics
@@ -33,10 +34,10 @@ class TemperatureSimulation(SimProtocol):
         t = self._time
         tkp1 = self.time_keeper.time
         self.state.predict((t, tkp1), self.state_dynamics)
-        
+
         # Update measurements
         self.y = self.measurement_function(self.state.mu)
-        
+
         # Update time
         self._time = tkp1
 
@@ -44,6 +45,7 @@ class TemperatureSimulation(SimProtocol):
         """Specific method to expose temperature sensor data."""
         self.update()
         return self._time, self.y
+
 
 def labsim(TC: float, t: float, Q1: float) -> float:
     U: float = 10.0
@@ -55,6 +57,7 @@ def labsim(TC: float, t: float, Q1: float) -> float:
 
     dTCdt: float = (U * A * (Ta - TC) + alpha * Q1) / (m * Cp)
     return dTCdt
+
 
 def g(x):
     return x[0]

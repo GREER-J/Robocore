@@ -1,7 +1,8 @@
 from typing import Protocol, NoReturn
 
+
 class CommsProtocol(Protocol):
-    def send_command(self, command:str) -> NoReturn:
+    def send_command(self, command: str) -> NoReturn:
         """
         Send received command via connection.
 

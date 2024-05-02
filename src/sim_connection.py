@@ -1,5 +1,6 @@
 from src.communication import CommsProtocol
 
+
 class SimConnection(CommsProtocol):
     def __init__(self, command_fun: callable) -> None:
         self._conn = command_fun
@@ -11,7 +12,7 @@ class SimConnection(CommsProtocol):
     def send_command(self, command: str) -> None:
         rv = self._conn(command)
         self.buffer += rv
-        
+
     def read_connection(self) -> str:
         buffer = self.buffer
         self.buffer = ""

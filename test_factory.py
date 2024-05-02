@@ -1,6 +1,7 @@
 from src.communication import CommsProtocol
 from src.sensors import AnalogueSensor
 
+
 class CommsStub(CommsProtocol):
     def __init__(self, expected_code, expected_time, expected_value) -> None:
         self.command_sent = None
@@ -14,10 +15,11 @@ class CommsStub(CommsProtocol):
     def read_connection(self) -> str:
         return f"{self.code}: {self.time}, {self.value}"
 
-#def test_sensor_create_analog():
-    
-    #sensor = SensorFactory(sensor_config)
-    #assert type(sensor) == 
+# def test_sensor_create_analog():
 
-s = AnalogueSensor('A', CommsStub('A', 1,1))
+    # sensor = SensorFactory(sensor_config)
+    # assert type(sensor) ==
+
+
+s = AnalogueSensor('A', CommsStub('A', 1, 1))
 print(type(s))

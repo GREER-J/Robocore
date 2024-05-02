@@ -1,5 +1,6 @@
 import time
 
+
 class TimeKeeper:
     def __init__(self, scalar=1):
         self.start_time = time.time()
@@ -17,8 +18,8 @@ class TimeKeeper:
         """
         elapsed = time.time() - self.start_time
         return elapsed * self.scalar
-    
-    def convert_time(self, sim_time:float) -> float:
+
+    def convert_time(self, sim_time: float) -> float:
         """Converts time from sim time to real time
 
         Args:
@@ -28,6 +29,6 @@ class TimeKeeper:
             float: realtime duration in seconds [s]
         """
         return sim_time / self.scalar
-    
+
     def sleep(self, sim_time_duration: float) -> None:
         time.sleep(self.convert_time(sim_time_duration))

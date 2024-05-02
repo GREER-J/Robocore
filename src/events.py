@@ -1,13 +1,14 @@
 from src.timekeeper import TimeKeeper
 from typing import Protocol, runtime_checkable
 
+
 @runtime_checkable
 class EventProtocol(Protocol):
     """
     Protocol for event objects, requiring implementations to provide
     properties for trigger time, duration, priority, and a method to check if the event is recurring.
     """
-    
+
     @property
     def trigger_time(self) -> float:
         """Get the time at which the event is supposed to trigger."""
@@ -37,12 +38,12 @@ class EventProtocol(Protocol):
 
 
 class Event(EventProtocol):
-    def __init__(self, time: float, process_fun: callable, expected_duration: float, priority: int, frequency:float=None, call_limit:int =None ) -> None:
+    def __init__(self, time: float, process_fun: callable, expected_duration: float, priority: int, frequency: float = None, call_limit: int = None) -> None:
         self._time = time
         self._process_fun = process_fun
         self._duration = expected_duration
         self._priority = priority
-            # Recurring specific
+        # Recurring specific
         self._frequency = frequency
         self._n_called = 0
         self._call_limit = call_limit
@@ -71,7 +72,7 @@ class Event(EventProtocol):
     @property
     def trigger_time(self) -> float:
         return self._time
-    
+
     @property
     def duration(self) -> float:
         """Get the expected duration of the event."""
@@ -81,14 +82,14 @@ class Event(EventProtocol):
     def priority(self) -> int:
         """Get the priority level of the event."""
         return self._priority
-    
+
     def increment_trigger_time(self) -> None:
         self._time += 1/self._frequency
 
     def process(self) -> None:
         self._n_called += 1
         self._process_fun()
-  
+
 
 class EventManager():
     def __init__(self, queue_max: int, time_keeper: TimeKeeper) -> None:
@@ -102,7 +103,8 @@ class EventManager():
             self._active_queue.append(event)
 
     def process_events(self):
-        self._active_queue.sort(key=lambda event: (event.priority, event.trigger_time))
+        self._active_queue.sort(key=lambda event: (
+            event.priority, event.trigger_time))
         remaining_events = []
 
         for event in self._active_queue:
@@ -116,15 +118,15 @@ class EventManager():
 
     def add_scheduled_event(self, event: EventProtocol) -> None:
         self._scheduled_events.append(event)
-    
+
     @property
     def n_events_in_active_queue(self):
         return len(self._active_queue)
-    
+
     @property
     def n_scheduled_events(self):
         return len(self._scheduled_events)
-    
+
     def transfer_events(self) -> None:
         """ Transfer events from scheduled to active based on the current time. """
         current_time = self._time_keeper.time
@@ -137,7 +139,7 @@ class EventManager():
                     new_scheduled_events.append(event)
             else:
                 new_scheduled_events.append(event)
-    
+
         # Remove transferred events from the scheduled queue
         self._scheduled_events = [
             event for event in self._scheduled_events if event.trigger_time > current_time

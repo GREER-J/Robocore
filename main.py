@@ -2,7 +2,7 @@ from src.temperature_control_lab import TemperatureSimulation, labsim, g
 from src.plant import build_plant
 from src.state import State
 from src.timekeeper import TimeKeeper
-from config import known_comms_dict, known_sensor_dict ,known_actuator_dict
+from config import known_comms_dict, known_sensor_dict, known_actuator_dict
 from src.json_config_reader import JsonConfigReader
 from src.plant import Plant
 from src.events import EventManager
@@ -16,8 +16,8 @@ import os
 
 config_file_path = 'data/sim_tclab_config.json'
 
-dt = 0.2 # [s]
-T0 = 18 # [deg c]
+dt = 0.2  # [s]
+T0 = 18  # [deg c]
 x0 = np.ones(1)*T0
 
 tclab_sim = TemperatureSimulation(State(1, 1), labsim, g, TimeKeeper(10), x0)
@@ -28,8 +28,8 @@ config = config_reader.read_config(config_file_path)
 
 # Create connection
 comms_fac = CommsFactory(known_comms_dict)
-conn = comms_fac.create_comms(config['conn'], command_fun=tclab_sim.pass_command_to_sim)
-
+conn = comms_fac.create_comms(
+    config['conn'], command_fun=tclab_sim.pass_command_to_sim)
 
 # Create sensors
 sensors = {}
@@ -41,9 +41,11 @@ for sensor_config in config['sensors']:
 actuators = {}
 actuator_fac = ActuatorFactory(conn, known_actuator_dict)
 for actuator_config in config['actuators']:
-    actuators[actuator_config['id']] = actuator_fac.create_actuator(actuator_config)
+    actuators[actuator_config['id']
+              ] = actuator_fac.create_actuator(actuator_config)
 
-tclab = Plant(tclab_sim.time_keeper, EventManager(5, tclab_sim.time_keeper), sensors, actuators)
+tclab = Plant(tclab_sim.time_keeper, EventManager(
+    5, tclab_sim.time_keeper), sensors, actuators)
 
 time, data = tclab.poll_sensors('T1', 3, 1)
 

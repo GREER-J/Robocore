@@ -1,6 +1,7 @@
 from typing import Protocol, Tuple
 from src.communication import CommsProtocol
 
+
 class SensorProtocol(Protocol):
     def get_sensor_command(self) -> Tuple[float, float]:
         """
@@ -10,6 +11,7 @@ class SensorProtocol(Protocol):
             Tuple[float, float]: A tuple containing the sensor reading time and value.
         """
         pass
+
 
 class AnalogueSensor(SensorProtocol):
     def __init__(self, command: str, connection: CommsProtocol) -> None:

@@ -1,6 +1,7 @@
 from src.communication import CommsProtocol
 from src.sensors import SensorProtocol
 
+
 class SensorFactory:
     def __init__(self, connection: CommsProtocol, sensor_dict: dict[str:SensorProtocol]) -> SensorProtocol:
         self._connection = connection
@@ -11,5 +12,5 @@ class SensorFactory:
 
         sensor_constructor = self._known_sensors[sensor_type]
         sensor = sensor_constructor(sensor_config['command'], self._connection)
-        
+
         return sensor

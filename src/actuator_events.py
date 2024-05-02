@@ -1,8 +1,9 @@
 from src.events import EventProtocol
 from src.actuators import ActuatorProtocol
 
+
 class SetpointActuatorEvent(EventProtocol):
-    def __init__(self, actuator:ActuatorProtocol, trigger_time, priority, setpoint, duration=0, frequency=None, call_limit=None):
+    def __init__(self, actuator: ActuatorProtocol, trigger_time, priority, setpoint, duration=0, frequency=None, call_limit=None):
         """
         Initializes a setpoint actuator event.
 
@@ -23,11 +24,11 @@ class SetpointActuatorEvent(EventProtocol):
         # Check setpoint
         if not self._actuator.is_legal_command(setpoint):
             # Illegal command so should fault!
-            raise ValueError(f"{setpoint} is not a legal command for this actuator")
+            raise ValueError(
+                f"{setpoint} is not a legal command for this actuator")
 
     def process(self):
         """
         Process the setpoint actuator event by setting the actuator to the specified setpoint.
         """
         self._actuator.set_actuator(self.setpoint)
-

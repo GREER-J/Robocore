@@ -1,6 +1,7 @@
 from src.sim_connection import SimConnection
 from tests.mock_sim_stub import SimStub
 
+
 def test_sim_connection_calls_correct_sim_function():
     """Sim connection object should call the correct function in sim"""
     expected_command = 'A'

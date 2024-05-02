@@ -3,6 +3,7 @@ from tests.mock_actuator_stub import ActuatorStub
 from src.actuator_fac import ActuatorFactory
 from src.actuators import PwmOutput
 
+
 def test_actuator_fac_create_correct_actuator():
     # Sensor configuration for the test
     actuator_config = {
@@ -14,12 +15,13 @@ def test_actuator_fac_create_correct_actuator():
         "units": "percent"
     }
 
-    dummy_comms = CommsStub('a', 1,1)
+    dummy_comms = CommsStub('a', 1, 1)
     actuator_dict = {"pwm": ActuatorStub}
     fac = ActuatorFactory(dummy_comms, actuator_dict)
 
     sensor = fac.create_actuator(actuator_config)
     assert isinstance(sensor, ActuatorStub)
+
 
 def test_actuator_fac_create_pwm_actuator():
     # Sensor configuration for the test
@@ -32,7 +34,7 @@ def test_actuator_fac_create_pwm_actuator():
         "units": "percent"
     }
 
-    dummy_comms = CommsStub('a', 1,1)
+    dummy_comms = CommsStub('a', 1, 1)
     actuator_dict = {"pwm": PwmOutput}
     fac = ActuatorFactory(dummy_comms, actuator_dict)
 

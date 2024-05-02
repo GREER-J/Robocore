@@ -1,6 +1,6 @@
 # from src.state import State
 # import numpy as np
-        
+
 # def test_state_to_array_is_correct_size():
 #     nx = 5
 #     nu = 2
@@ -35,4 +35,3 @@
 #     x0 = state.mu.copy()  # Make a copy to compare post-prediction
 #     state.predict(2.3)
 #     assert np.all(state.mu == x0 + 2.3 * f(x0, state._u)), "State didn't update as expected!"
-
